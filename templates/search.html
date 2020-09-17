@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% block title %} Search Results {% endblock title %}
+{% block style %}
+
+
+body {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+footer {
+    clear: both;
+    position: bottom;
+    height: 150px;
+    margin-top: 60px;
+}
+{% endblock style %}
+
+
+{% block body %}
+
+<div class="container-fluid">
+<div class="row">
+    <div class="col-md-2">
+        <div class="list-group mt-3">
+  <a href="/" class="list-group-item list-group-item-action active">
+    All Images
+  </a>
+  {% for c in category%}
+  <a href="/category/{{c.pk}}" class="list-group-item list-group-item-action list-group-item-success">{{c.title}}</a>
+{% endfor%}
+        </div>
+    </div>
+
+  <div class="col-md-10">
+      {% if page_obj|length < 1 %}
+      <h3 class="mt-3">No Result Found:</h3>
+      <div class="container">
+      <img src='media/images/oops.png' class="mt-4">
+      </div>
+      {%else%}
+      <h1  class="mt-2">Search Results:</h1>
+                  {% endif%}
+    <div class="row mt-3" >
+      <div class="col-md-12">
+        <div class="card-columns">
+                {% for i in page_obj%}
+        <div class="card">
+    <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+    <div class="card-body" style="background-color:rgb(239,222,205);">
+        <h5 class="card-title">{{i.name}}</h5>
+        <p class="card-text">{{i.description}}</p>
+        <a href="#" class="btn btn-primary" onclick="showModelwithImage('{{i.image}}')">View Image</a>
+        <a href="/media/{{i.image}}" class="ml-5" download>
+            <button class="btn btn-secondary ">Download</button>
+        </a>
+  </div>
+</div>
+
+
+                {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div  class="modal " id="image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Imagebazar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <img src="#!" id="image-show" class="img-fluid" alt="...">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav aria-label="Page navigation example" class="mt-5">
+    <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+      <span class="page-link">
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      </span>
+    </li>
+    {% else %}
+      <li class="page-item disabled">
+      <span class="page-link">Previous</span>
+    </li>
+      {% endif %}
+
+
+    <li class="page-item">
+        <li class="page-item active" aria-current="page">
+      <span class="page-link">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        <span class="sr-only">(current)</span>
+      </span>
+    </li>
+    {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+    </li>
+    {% else %}
+        <li class="page-item disabled">
+      <span class="page-link">Next</span>
+    </li>
+        {% endif%}
+  </ul>
+</nav>
+
+<!--footer-->
+<footer class="footer" style="background-color:grey">
+        <div class="footer-container">
+            <span>
+                <ul class="navbar-nav mr-auto">
+                    <li class="mx-2">
+                        <a class="nav-link" href="/aboutUs" style="display:inline-block; color:black;">About Us</a>
+                    </li>
+                    <li class="mx-2">
+                         <a class="nav-link" href="/contactUs" style="display:inline-block; color:black;">Contact US</a>
+                    </li>
+                    <li class="mx-2">
+                        <p style="color:black;">© 2020 Bhagyavant_Avantgi</p>
+                    </li>
+                </ul>
+            </span>
+        </div>
+    </footer>
+
+
+
+{% block script%}
+<script>
+function showModelwithImage(imageUrl)
+{
+    $('#image-modal').modal('show')
+    $('#image-show').attr('src',`/media/${imageUrl}`)
+}
+</script>
+{% endblock script%}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" integrity="sha256-qM7QTJSlvtPSxVRjVWNM2OfTAz/3k5ovHOKmKXuYMO4=" crossorigin="anonymous"></script>
+
+
+
+{% endblock body %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block head%}
+{% block title %} Search Results {% endblock title %}
+{% block style %}
+
+
+footer {
+    clear: both;
+    position: bottom;
+    height: 150px;
+    margin-top: 60px;
+}
+{% endblock style %}
+{% endblock head%}
+{% block body %}
+<div class="container my-3">
+    <h3>Contact Us!</h3>
+    <form action="/contactUs" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="name" class="form-control" id="name" name="name" placeholder="Enter your Name" required="">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email" required="">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone No</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required="">
+        </div>
+        <div class="form-group">
+            <label for="desc">Your Queries!</label>
+            <textarea class="form-control" id="desc" name="desc" rows="3" required=""></textarea>
+        </div>
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+<footer class="footer" style="background-color:grey">
+        <div class="footer-container">
+            <span>
+                <ul class="navbar-nav mr-auto">
+                    <li class="mx-2">
+                        <a class="nav-link" href="/aboutUs" style="display:inline-block; color:black;">About Us</a>
+                    </li>
+                    <li class="mx-2">
+                        <a class="nav-link" href="/contactUs" style="display:inline-block; color:black;">Contact US</a>
+                    </li>
+                    <li class="mx-2">
+                        <p style="color:black;">© 2020 Bhagyavant_Avantgi</p>
+                    </li>
+                </ul>
+            </span>
+        </div>
+    </footer>
+{% endblock body %}
